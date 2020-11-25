@@ -21,13 +21,11 @@ firebase.initializeApp({
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 
-
 function App() {
   const [user] = useAuthState(auth);
 
   return (
     <div className="App">
-      <header>Hello !</header>
       <main>
         {user ? <SignOut auth={auth}></SignOut> : <SignIn auth={auth}></SignIn>}
       </main>
