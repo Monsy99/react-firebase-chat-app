@@ -5,9 +5,7 @@ import 'firebase/firestore';
 import Button from "../Button";
 
 const SignIn = ({auth}) => {
-    console.log("rendered sign in button");
     const signInWithGoogle = () => {
-        console.log("sign in popup");
         const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider);
     } 
