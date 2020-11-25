@@ -1,6 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
-
+import { AuthorAvatar, FormSubmit, FormInput, Message, MessageForm, MessagesList, MessageText, MessageTime, Wrapper } from "./styled";
+import { nanoid } from "nanoid";
 
 const ChatRoom = ({ firebase, firestore, auth }) => {
     const messagesRef = firestore.collection('messages');
@@ -11,11 +12,13 @@ const ChatRoom = ({ firebase, firestore, auth }) => {
     const onInputChange = (e) => {
         setInput(e.target.value);
     }
+    useEffect(() => {
+    },[messages])
     const onFormSubmit = async (e) => {
         e.preventDefault();
         const { uid, photoURL } = auth.currentUser;
-
-        await messagesRef.add(
+        if(input.trim() !== "")
+        {await messagesRef.add(
             {
                 text: input,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -24,25 +27,31 @@ const ChatRoom = ({ firebase, firestore, auth }) => {
             }
         )
         setInput('');
+        }
+        if(!!dummy.current){
         dummy.current.scrollIntoView({ behavior: 'smooth' })
+        }
     }
     const dummy = useRef();
-
     return (
-        <div>
-            <ul>
-                { messages && messages.map( message => <li className={message.id}>
-                <img alt={"avatar"} src={message.photoURL}></img>
+        <Wrapper>
+            <MessagesList>
+                { messages && messages.map( message => <Message key={nanoid()} className={message.id}>
+                <AuthorAvatar alt={"avatar"} src={message.photoURL}></AuthorAvatar>
+                <MessageText>
                 {message.text}
-                </li>) }
+                </MessageText>
+                <MessageTime>
+                    {message.createdAt ? `${new Date(message.createdAt.seconds * 1000).toLocaleTimeString()} ${new Date(message.createdAt.seconds * 1000).toLocaleDateString()}` : ``}
+                </MessageTime>
+                </Message>) }
                 <div ref={dummy}></div>
-            </ul>
-            <form onSubmit={onFormSubmit}>
-                <input value={input} onChange={onInputChange}>
-                </input>
-                <button>Send</button>
-            </form>
-        </div>
+            </MessagesList>
+            <MessageForm onSubmit={onFormSubmit}>
+                <FormInput placeholder={"Write a message here"} value={input} onChange={onInputChange}/>
+                <FormSubmit>⬆️</FormSubmit>
+            </MessageForm>
+        </Wrapper>
     );
 }
 export default ChatRoom;
