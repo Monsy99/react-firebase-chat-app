@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
 
-export default ({ firebase, firestore, auth }) => {
+const ChatRoom = ({ firebase, firestore, auth }) => {
     const messagesRef = firestore.collection('messages');
     const getMessagesByTime = messagesRef.orderBy('createdAt').limit(25);
     const [messages] = useCollectionData(getMessagesByTime);
@@ -32,7 +32,7 @@ export default ({ firebase, firestore, auth }) => {
         <div>
             <ul>
                 { messages && messages.map( message => <li className={message.id}>
-                <img src={message.photoURL}></img>
+                <img alt={"avatar"} src={message.photoURL}></img>
                 {message.text}
                 </li>) }
                 <div ref={dummy}></div>
@@ -45,3 +45,4 @@ export default ({ firebase, firestore, auth }) => {
         </div>
     );
 }
+export default ChatRoom;
