@@ -4,6 +4,7 @@ const Wrapper = styled.section`
 width:100vw;
 max-width:1200px;
 display:grid;
+margin: 0 auto;
 `;
 
 const MessagesList = styled.ul`
@@ -40,7 +41,8 @@ color:#ccc;
 margin: 0 8px;
 `;
 const MessageForm = styled.form`
-width:100vw;
+width:100%;
+max-width:1200px;
 margin:0;
 padding:0;
 display:grid;
