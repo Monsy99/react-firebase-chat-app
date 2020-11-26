@@ -5,7 +5,7 @@ import { nanoid } from "nanoid";
 
 const ChatRoom = ({ firebase, firestore, auth }) => {
     const messagesRef = firestore.collection('messages');
-    const getMessagesByTime = messagesRef.orderBy('createdAt').limit(25);
+    const getMessagesByTime = messagesRef.orderBy('createdAt');
     const [messages] = useCollectionData(getMessagesByTime);
 
     const [input,setInput] = useState('');
