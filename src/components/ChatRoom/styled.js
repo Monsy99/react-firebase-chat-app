@@ -5,6 +5,7 @@ width:100vw;
 max-width:1200px;
 display:grid;
 margin: 0 auto;
+margin-bottom:60px;
 `;
 
 const MessagesList = styled.ul`
