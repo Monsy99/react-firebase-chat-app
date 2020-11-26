@@ -1,10 +1,9 @@
-import SignIn from "./components/SignIn";
-import SignOut from "./components/SignOut";
 import ChatRoom from "./components/ChatRoom"
 import firebase from "firebase/app";
 import 'firebase/firestore';
 import 'firebase/auth';
 import { useAuthState } from "react-firebase-hooks/auth";
+import Navigation from "./components/Navigation";
 
 
 firebase.initializeApp({
@@ -26,9 +25,7 @@ function App() {
 
   return (
     <div className="App">
-      <main>
-        {user ? <SignOut auth={auth}></SignOut> : <SignIn auth={auth}></SignIn>}
-      </main>
+      <Navigation auth={auth}></Navigation>
       {user ? <ChatRoom firebase={firebase} firestore={firestore} auth={auth}/> : ""}
     </div>
   );
