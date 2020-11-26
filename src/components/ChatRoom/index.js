@@ -33,16 +33,18 @@ const ChatRoom = ({ firebase, firestore, auth }) => {
         }
     }
     const dummy = useRef();
+    const currentUserId = auth.currentUser.uid;
     return (
         <Wrapper>
             <MessagesList>
-                { messages && messages.map( message => <Message key={nanoid()} className={message.id}>
+                { messages && messages.map( message => <Message isAuthor={message.uid === currentUserId} key={nanoid()} className={message.id}>
                 <AuthorAvatar alt={"avatar"} src={message.photoURL}></AuthorAvatar>
                 <MessageText>
                 {message.text}
                 </MessageText>
                 <MessageTime>
-                    {message.createdAt ? `${new Date(message.createdAt.seconds * 1000).toLocaleTimeString()} ${new Date(message.createdAt.seconds * 1000).toLocaleDateString()}` : ``}
+                    {message.createdAt ? `${new Date(message.createdAt.seconds * 1000).toLocaleTimeString()}
+                     ${new Date(message.createdAt.seconds * 1000).toLocaleDateString()}` : ``}
                 </MessageTime>
                 </Message>) }
                 <div ref={dummy}></div>

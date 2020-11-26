@@ -18,12 +18,12 @@ display: flex;
 width: 100%;
 align-items:center;
 margin:8px 0;
+flex-direction:${({isAuthor}) => isAuthor ? "row-reverse" : "unset" };
 `;
 const AuthorAvatar = styled.img`
 width:45px;
 border-radius:50%;
 align-self:flex-start;
-justify-self:flex-start;
 `;
 const MessageText = styled.p`
 font-size:18px;
@@ -32,8 +32,10 @@ padding: 8px 12px;
 margin: 0 8px;
 border-radius:10px;
 `;
-const MessageTime = styled.p`
+const MessageTime = styled.div`
 font-size:14px;
+text-align:center;
+flex-grow:0;
 color:#ccc;
 margin: 0 8px;
 `;
