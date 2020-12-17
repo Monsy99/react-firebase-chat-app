@@ -13,8 +13,8 @@ import {
 } from "./styled";
 import { nanoid } from "nanoid";
 
-const ChatRoom = ({ firebase, firestore, auth }) => {
-  const messagesRef = firestore.collection("messages");
+const ChatRoom = ({ firebase, db, auth }) => {
+  const messagesRef = db.collection("messages");
   const getMessagesByTime = messagesRef.orderBy("createdAt");
   const [messages] = useCollectionData(getMessagesByTime);
 
@@ -33,7 +33,7 @@ const ChatRoom = ({ firebase, firestore, auth }) => {
     if (input.trim() !== "") {
       await messagesRef.add({
         text: input,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        createdAt: firebase.db.FieldValue.serverTimestamp(),
         uid,
         photoURL,
       });

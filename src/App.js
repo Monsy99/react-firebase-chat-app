@@ -4,6 +4,7 @@ import "firebase/firestore";
 import "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Navigation from "./components/Navigation";
+import { useCollectionData } from "react-firebase-hooks/firestore";
 
 firebase.initializeApp({
   apiKey: "AIzaSyDWBkQjdvZjHIpip9Z1bm9IpDmzc1XxQmM",
@@ -17,16 +18,33 @@ firebase.initializeApp({
 });
 
 const auth = firebase.auth();
-const firestore = firebase.firestore();
+const db = firebase.firestore();
 
 function App() {
   const [user] = useAuthState(auth);
+  const userBaseRef = db.collection("users");
+  const [userList] = useCollectionData(userBaseRef);
+
+  console.log(user);
+  console.log(userList);
+
+  const isInBase =
+    user && userList && userList.some(({ id }) => user.uid === id);
+  if (user && db && userList && !isInBase) {
+    db.collection("users").doc(user.uid.toString()).set({
+      id: user.uid,
+      name: user.displayName,
+      permissions: "default",
+      registrationDate: new Date().toString(),
+      photoURL: user.photoURL,
+    });
+  }
 
   return (
     <div className="App">
       <Navigation auth={auth}></Navigation>
-      {user ? (
-        <ChatRoom firebase={firebase} firestore={firestore} auth={auth} />
+      {user && isInBase ? (
+        <ChatRoom firebase={firebase} db={db} auth={auth} />
       ) : (
         ""
       )}
