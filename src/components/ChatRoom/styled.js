@@ -1,12 +1,8 @@
 import styled from "styled-components";
 
-const Wrapper = styled.section`
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  margin-bottom: 60px;
+const RelativeDiv = styled.div`
+  position: relative;
 `;
-
 const MessagesList = styled.ul`
   list-style: none;
   display: flex;
@@ -41,12 +37,14 @@ const MessageTime = styled.div`
   margin: 0 8px;
 `;
 const MessageForm = styled.form`
-  width: calc(100% - 300px);
+  width: 100%;
   margin: 0;
   padding: 0;
+  padding-left: 300px;
   display: flex;
   position: fixed;
   bottom: 0;
+  left: 0;
 `;
 const FormInput = styled.input`
   font-family: "Roboto", sans-serif;
@@ -73,9 +71,9 @@ const FormSubmit = styled.button`
   color: white;
 `;
 export {
+  RelativeDiv,
   FormSubmit,
   FormInput,
-  Wrapper,
   MessagesList,
   AuthorAvatar,
   Message,
