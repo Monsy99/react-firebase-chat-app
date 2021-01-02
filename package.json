@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://Monsy99.github.io/react-firebase-chat-app",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.0",
     "@testing-library/user-event": "^12.2.2",
