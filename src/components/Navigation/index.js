@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { NavBar, Logo } from "./styled.js";
+import { useAuthState } from "react-firebase-hooks/auth";
 import SignOut from "../SignOut";
 import SignIn from "../SignIn";
 
 const Navigation = ({ firebase }) => {
   const auth = firebase.auth();
-  useEffect(() => {}, [auth.currentUser]);
-  console.log(auth.currentUser);
+  const [user, loading] = useAuthState(auth);
   return (
     <NavBar>
       <Logo>Chat App</Logo>
-      {auth.currentUser ? <SignOut auth={auth} /> : <SignIn auth={auth} />}
+      {user && !loading ? <SignOut auth={auth} /> : <SignIn auth={auth} />}
     </NavBar>
   );
 };
