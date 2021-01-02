@@ -1,5 +1,5 @@
 import React from "react";
-import { NavBar, Logo } from "./styled.js";
+import { NavBar, Logo, StyledLink } from "./styled.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SignOut from "../SignOut";
 import SignIn from "../SignIn";
@@ -9,7 +9,9 @@ const Navigation = ({ firebase }) => {
   const [user, loading] = useAuthState(auth);
   return (
     <NavBar>
-      <Logo>Chat App</Logo>
+      <StyledLink to="/general">
+        <Logo>Chat App</Logo>
+      </StyledLink>
       {user && !loading ? <SignOut auth={auth} /> : <SignIn auth={auth} />}
     </NavBar>
   );

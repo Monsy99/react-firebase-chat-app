@@ -1,5 +1,9 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
 const NavBar = styled.nav`
   width: 100%;
   max-width: 1200px;
@@ -18,4 +22,4 @@ const Logo = styled.h1`
   padding: 12px;
 `;
 
-export { NavBar, Logo };
+export { NavBar, Logo, StyledLink };
