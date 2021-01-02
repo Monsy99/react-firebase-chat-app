@@ -1,8 +1,9 @@
-import ChatRoom from "./components/ChatRoom";
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
+import Default from "./components/Default";
+import { HashRouter, Route } from "react-router-dom";
+import ChatRoom from "./components/ChatRoom";
 import Navigation from "./components/Navigation";
 
 firebase.initializeApp({
@@ -16,21 +17,18 @@ firebase.initializeApp({
   measurementId: "G-NKK3HT6H63",
 });
 
-const auth = firebase.auth();
-const firestore = firebase.firestore();
-
 function App() {
-  const [user] = useAuthState(auth);
-
+  const auth = firebase ? firebase.auth() : null;
   return (
-    <div className="App">
-      <Navigation auth={auth}></Navigation>
-      {user ? (
-        <ChatRoom firebase={firebase} firestore={firestore} auth={auth} />
-      ) : (
-        ""
-      )}
-    </div>
+    <HashRouter>
+      <Route path={`/:roomRef`}>
+        <Navigation firebase={firebase}></Navigation>
+        <Default firebase={firebase}></Default>
+      </Route>
+      <Route path="/" exact>
+        <Default firebase={firebase}></Default>
+      </Route>
+    </HashRouter>
   );
 }
 
