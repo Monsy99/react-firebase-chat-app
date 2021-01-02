@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
-  width: 100vw;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   margin-bottom: 60px;
@@ -41,18 +41,17 @@ const MessageTime = styled.div`
   margin: 0 8px;
 `;
 const MessageForm = styled.form`
-  width: 100%;
-  max-width: 1200px;
+  width: calc(100% - 300px);
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
   position: fixed;
   bottom: 0;
 `;
 const FormInput = styled.input`
   font-family: "Roboto", sans-serif;
   padding: 12px;
+  flex-grow: 1;
   font-size: 16px;
   color: #ddd;
   background-color: #222;
