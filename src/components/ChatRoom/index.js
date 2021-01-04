@@ -9,7 +9,6 @@ import {
   MessagesList,
   MessageText,
   MessageTime,
-  Wrapper,
   RelativeDiv,
 } from "./styled";
 import { nanoid } from "nanoid";
@@ -60,6 +59,7 @@ const ChatRoom = ({ firebase }) => {
   return (
     auth && (
       <RelativeDiv>
+        <h1>Room: {currentRoom ? currentRoom.title : ""}</h1>
         <MessagesList>
           {messages &&
             messages.map((message) => (
