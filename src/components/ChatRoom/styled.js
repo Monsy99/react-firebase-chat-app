@@ -37,14 +37,13 @@ const MessageTime = styled.div`
   margin: 0 8px;
 `;
 const MessageForm = styled.form`
-  width: 100%;
-  margin: 0;
+  width: calc(100% - 300px);
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 0;
-  padding-left: 300px;
   display: flex;
   position: fixed;
   bottom: 0;
-  left: 0;
 `;
 const FormInput = styled.input`
   font-family: "Roboto", sans-serif;
