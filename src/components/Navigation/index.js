@@ -9,7 +9,7 @@ const Navigation = ({ firebase }) => {
   const [user, loading] = useAuthState(auth);
   return (
     <NavBar>
-      <StyledLink to="/general">
+      <StyledLink to="/room/general">
         <Logo>Chat App</Logo>
       </StyledLink>
       {user && !loading ? <SignOut auth={auth} /> : <SignIn auth={auth} />}

@@ -21,7 +21,7 @@ function App() {
   const auth = firebase ? firebase.auth() : null;
   return (
     <HashRouter>
-      <Route path={`/:roomRef`}>
+      <Route path={`/room/:roomRef`}>
         <Navigation firebase={firebase}></Navigation>
         <Default firebase={firebase}></Default>
       </Route>
