@@ -1,8 +1,7 @@
 import Menu from "../Menu";
 import ChatRoom from "../ChatRoom";
-
 import { useAuthState } from "react-firebase-hooks/auth";
-import { GridContainer } from "./styled";
+import { GridContainer, Wrapper } from "./styled";
 
 const Default = ({ firebase }) => {
   const firestore = firebase.firestore();
@@ -10,14 +9,16 @@ const Default = ({ firebase }) => {
   const [user] = useAuthState(auth);
   return (
     <>
-      <GridContainer>
-        <Menu db={firebase} firestore={firestore} auth={auth}></Menu>
-        {user ? (
-          <ChatRoom firebase={firebase} firestore={firestore} auth={auth} />
-        ) : (
-          ""
-        )}
-      </GridContainer>
+      <Wrapper>
+        <GridContainer>
+          <Menu db={firebase} firestore={firestore} auth={auth}></Menu>
+          {user ? (
+            <ChatRoom firebase={firebase} firestore={firestore} auth={auth} />
+          ) : (
+            ""
+          )}
+        </GridContainer>
+      </Wrapper>
     </>
   );
 };
