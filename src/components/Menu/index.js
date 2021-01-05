@@ -2,52 +2,41 @@ import { nanoid } from "nanoid";
 import { useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useParams } from "react-router-dom";
-import { Container, Room, StyledLink } from "./styled";
+import { Container, Room, StyledLink, Title } from "./styled";
 
 const Menu = ({ auth, firestore, db }) => {
   const { roomRef } = useParams();
   const chatroomsRef = firestore.collection("chatrooms");
   const [chatrooms] = useCollectionData(chatroomsRef);
-  const [messages] = useCollectionData(
-    chatroomsRef.doc(roomRef).collection("messages")
-  );
-  const [input, setInput] = useState("");
+  const [titleInput, setTitleInput] = useState("");
+  const [membersInput, setMembersInput] = useState("");
 
   const currentRoom = chatrooms
     ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
     : null;
-  const messagesRef = chatroomsRef.doc(roomRef).collection("messages");
-  console.log(messages);
 
-  const addMessage = async () => {
-    await messagesRef.add({ value: "siemka" });
-  };
   const onFormSubmit = (e) => {
     e.preventDefault();
     const ref = nanoid();
+    const members = [auth.currentUser.uid];
     try {
-      if (input.trim() !== "") {
+      if (titleInput.trim() !== "") {
         chatroomsRef.doc(ref).set({
           createdAt: db.firestore.FieldValue.serverTimestamp(),
-          title: input,
+          title: titleInput,
           creator: auth.currentUser.uid,
           ref: ref,
           private: false,
-          messages: [],
+          members: members,
         });
+        setTitleInput("");
       }
     } catch (e) {
       console.log(e);
     }
   };
-  const onInputChange = (e) => {
-    setInput(e.target.value);
-  };
-  const logStatus = () => {
-    console.log("chatrooms: ", chatrooms);
-    console.log("user:", auth.X);
-    console.log("parameters:", roomRef);
-    console.log("current room:", currentRoom);
+  const onTitleInputChange = (e) => {
+    setTitleInput(e.target.value);
   };
 
   return (
@@ -56,21 +45,30 @@ const Menu = ({ auth, firestore, db }) => {
       <form onSubmit={onFormSubmit}>
         <input
           placeholder="Tytuł czatu"
-          value={input}
-          onChange={onInputChange}
+          value={titleInput}
+          onChange={onTitleInputChange}
         ></input>
-        <button>submit</button>
+        <button>Add a new room</button>
       </form>
-      <button onClick={logStatus}>Log status</button>
-      <button onClick={addMessage}>Siemka Button</button>
+      <h2>Chatrooms:</h2>
       {chatrooms
-        ? chatrooms.map((chatroom) => (
-            <Room key={`${chatroom.ref}`}>
-              <StyledLink to={`/${chatroom.ref}`}>
-                <header>{chatroom.title}</header>
-              </StyledLink>
-            </Room>
-          ))
+        ? chatrooms.map((chatroom) => {
+            if (
+              chatroom.members.some(
+                (item) =>
+                  item === auth.currentUser.uid || chatroom.private === false
+              )
+            ) {
+              return (
+                <StyledLink to={`/${chatroom.ref}`}>
+                  <Room key={`${chatroom.ref}`}>
+                    <Title>{chatroom.title}</Title>
+                  </Room>
+                </StyledLink>
+              );
+            }
+            return null;
+          })
         : ""}
     </Container>
   );
