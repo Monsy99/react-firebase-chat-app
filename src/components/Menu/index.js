@@ -60,7 +60,7 @@ const Menu = ({ auth, firestore, db }) => {
               )
             ) {
               return (
-                <StyledLink to={`/${chatroom.ref}`}>
+                <StyledLink key={`${chatroom.ref}`} to={`/${chatroom.ref}`}>
                   <Room key={`${chatroom.ref}`}>
                     <Title>{chatroom.title}</Title>
                   </Room>
