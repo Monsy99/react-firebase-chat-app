@@ -3,8 +3,8 @@ import "firebase/firestore";
 import "firebase/auth";
 import Default from "./components/Default";
 import { HashRouter, Redirect, Route } from "react-router-dom";
-import ChatRoom from "./components/ChatRoom";
 import Navigation from "./components/Navigation";
+import LoginPage from "./components/LoginPage";
 
 firebase.initializeApp({
   apiKey: "AIzaSyDWBkQjdvZjHIpip9Z1bm9IpDmzc1XxQmM",
@@ -24,6 +24,9 @@ function App() {
       <Route path={`/:roomRef`}>
         <Navigation firebase={firebase}></Navigation>
         <Default firebase={firebase}></Default>
+      </Route>
+      <Route path="/login">
+        <LoginPage firebase={firebase} auth={auth}></LoginPage>
       </Route>
       <Route path="/" exact>
         <Redirect to="/general" firebase={firebase}></Redirect>
