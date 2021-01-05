@@ -14,17 +14,18 @@ const Menu = ({ auth, firestore, db }) => {
   const currentRoom = chatrooms
     ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
     : null;
+  const currentUserId = auth.currentUser ? auth.currentUser.uid : null;
 
   const onFormSubmit = (e) => {
     e.preventDefault();
     const ref = nanoid();
-    const members = [auth.currentUser.uid];
+    const members = [currentUserId];
     try {
       if (titleInput.trim() !== "") {
         chatroomsRef.doc(ref).set({
           createdAt: db.firestore.FieldValue.serverTimestamp(),
           title: titleInput,
-          creator: auth.currentUser.uid,
+          creator: currentUserId,
           ref: ref,
           private: false,
           members: members,
@@ -55,8 +56,7 @@ const Menu = ({ auth, firestore, db }) => {
         ? chatrooms.map((chatroom) => {
             if (
               chatroom.members.some(
-                (item) =>
-                  item === auth.currentUser.uid || chatroom.private === false
+                (item) => item === currentUserId || !chatroom.private
               )
             ) {
               return (
