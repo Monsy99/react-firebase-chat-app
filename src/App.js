@@ -2,7 +2,7 @@ import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
 import Default from "./components/Default";
-import { HashRouter, Route } from "react-router-dom";
+import { HashRouter, Redirect, Route } from "react-router-dom";
 import ChatRoom from "./components/ChatRoom";
 import Navigation from "./components/Navigation";
 
@@ -26,7 +26,7 @@ function App() {
         <Default firebase={firebase}></Default>
       </Route>
       <Route path="/" exact>
-        <Default firebase={firebase}></Default>
+        <Redirect to="/general" firebase={firebase}></Redirect>
       </Route>
     </HashRouter>
   );
