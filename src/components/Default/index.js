@@ -12,11 +12,12 @@ const Default = ({ firebase }) => {
       <Wrapper>
         <GridContainer>
           <Menu db={firebase} firestore={firestore} auth={auth}></Menu>
-          {user ? (
-            <ChatRoom firebase={firebase} firestore={firestore} auth={auth} />
-          ) : (
-            ""
-          )}
+          <ChatRoom
+            firebase={firebase}
+            user={user}
+            firestore={firestore}
+            auth={auth}
+          />
         </GridContainer>
       </Wrapper>
     </>
