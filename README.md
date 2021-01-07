@@ -1,5 +1,7 @@
 # React firebase chat app
 
+## Description
+
 A chat application that currently allows you to sign in with google
 and chat in chatrooms that users will soon be able to create.
 The app will be a simple tool that allows you to communicate with 
