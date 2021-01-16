@@ -2,26 +2,27 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 const Container = styled.div``;
 
-const StyledLink = styled(Link)`
+const Header = styled.header`
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: 22px;
+  line-height: 130%;
+  margin-top: 16px;
+`;
+const ChatroomsContainer = styled.div`
+  display: grid;
+  grid-gap: 6px;
+  margin-top: 16px;
+`;
+const Room = styled(Link)`
   text-decoration: none;
-  color: #ccc;
-  width: 100%;
-`;
-const Title = styled.p`
-  margin: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
   font-size: 18px;
-  &::before {
-    content: "#";
-    font-size: 20px;
-  }
-`;
-const Room = styled.div`
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #eee;
-  border-radius: 8px;
-  margin: 4px 0;
+  line-height: 130%;
+  padding: 10px 16px;
+  border: none;
+  color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.charade};
+  border-radius: 15px;
 `;
 
-export { Container, StyledLink, Room, Title };
+export { Container, Room, Header, ChatroomsContainer };

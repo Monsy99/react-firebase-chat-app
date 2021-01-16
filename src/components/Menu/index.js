@@ -1,10 +1,13 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Container, Room, StyledLink, Title } from "./styled";
+import { selectUser } from "../../userSlice";
+import { Container, Room, Header, ChatroomsContainer } from "./styled";
 
-const Menu = ({ auth, firestore, db }) => {
+const Menu = ({ firestore, db }) => {
+  const storeUser = useSelector(selectUser);
   const { roomRef } = useParams();
   const chatroomsRef = firestore.collection("chatrooms");
   const [chatrooms] = useCollectionData(chatroomsRef);
@@ -14,7 +17,7 @@ const Menu = ({ auth, firestore, db }) => {
   const currentRoom = chatrooms
     ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
     : null;
-  const currentUserId = auth.currentUser ? auth.currentUser.uid : null;
+  const currentUserId = storeUser ? storeUser.uid : null;
 
   const onFormSubmit = (e) => {
     e.preventDefault();
@@ -51,28 +54,24 @@ const Menu = ({ auth, firestore, db }) => {
         ></input>
         <button>Add a new room</button>
       </form>
-      <h2>Chatrooms:</h2>
-      {chatrooms
-        ? chatrooms.map((chatroom) => {
-            if (
-              chatroom.members.some(
-                (item) => item === currentUserId || !chatroom.private
-              )
-            ) {
-              return (
-                <StyledLink
-                  key={`${chatroom.ref}`}
-                  to={`/room/${chatroom.ref}`}
-                >
-                  <Room key={`${chatroom.ref}`}>
-                    <Title>{chatroom.title}</Title>
+      <Header>Chatrooms:</Header>
+      <ChatroomsContainer>
+        {chatrooms
+          ? chatrooms.map((chatroom) => {
+              if (
+                chatroom.members.some((item) => item === currentUserId) ||
+                !chatroom.private
+              ) {
+                return (
+                  <Room to={`/room/${chatroom.ref}`} key={`${chatroom.ref}`}>
+                    {chatroom.title}
                   </Room>
-                </StyledLink>
-              );
-            }
-            return null;
-          })
-        : ""}
+                );
+              }
+              return null;
+            })
+          : ""}
+      </ChatroomsContainer>
     </Container>
   );
 };
