@@ -1,12 +1,12 @@
 const theme = {
   color: {
-    mineSchaft: "#333333",
-    butterflyBush: "#6e5494",
-    wildSand: "#f5f5f5",
-    alabaster: "#fafafa",
-    tiaMaria: "#c9510c",
-    milanoRed: "#bd2c00",
-    mantis: "#6cc644",
-    indigo: "#4078c0",
+    charade: "#2D2D3A",
+    midGray: "#5F5F6E",
+    thunder: "#231F20",
+    shark: "#1C1C24",
+    woodsmoke: "#131419",
+    buttonBorder: "#4447E2",
+    white: "#FFFFFF",
   },
 };
+export default theme;
