@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     body {
     margin: 0;
     color: white;
-    background-color: black;
+    background-color: ${({ theme }) => theme.color.woodsmoke};
     font-family: 'Roboto', sans-serif;
     }
 `;
