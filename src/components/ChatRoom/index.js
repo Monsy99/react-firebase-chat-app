@@ -10,11 +10,15 @@ import {
   MessageText,
   MessageTime,
   RelativeDiv,
+  Header,
 } from "./styled";
 import { nanoid } from "nanoid";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../userSlice";
 
-const ChatRoom = ({ firebase, user }) => {
+const ChatRoom = ({ firebase }) => {
+  const storeUser = useSelector(selectUser);
   const firestore = firebase.firestore();
   const { roomRef } = useParams();
   const chatroomsRef = firestore.collection("chatrooms");
@@ -25,7 +29,6 @@ const ChatRoom = ({ firebase, user }) => {
   const currentRoom = chatrooms
     ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
     : null;
-  const currentUserId = user ? user.uid : null;
   const [input, setInput] = useState("");
   const onInputChange = (e) => {
     setInput(e.target.value);
@@ -37,7 +40,7 @@ const ChatRoom = ({ firebase, user }) => {
   }, [messages]);
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    const { uid, photoURL } = user;
+    const { uid, photoURL } = storeUser;
     if (input.trim() !== "") {
       await messagesRef.add({
         text: input,
@@ -53,14 +56,14 @@ const ChatRoom = ({ firebase, user }) => {
   };
   const dummy = useRef();
 
-  return user ? (
+  return storeUser ? (
     <RelativeDiv>
-      <h1>Room: {currentRoom ? currentRoom.title : ""}</h1>
+      <Header># {currentRoom ? currentRoom.title : ""}</Header>
       <MessagesList>
         {messages &&
           messages.map((message) => (
             <Message
-              isAuthor={message.uid === currentUserId}
+              isAuthor={message.uid === storeUser.uid}
               key={nanoid()}
               className={message.id}
             >
@@ -68,7 +71,9 @@ const ChatRoom = ({ firebase, user }) => {
                 alt={"avatar"}
                 src={message.photoURL}
               ></AuthorAvatar>
-              <MessageText>{message.text}</MessageText>
+              <MessageText isAuthor={message.uid === storeUser.uid}>
+                {message.text}
+              </MessageText>
               <MessageTime>
                 {message.createdAt
                   ? `${new Date(
