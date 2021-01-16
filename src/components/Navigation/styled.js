@@ -1,25 +1,23 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-`;
 const NavBar = styled.nav`
-  width: 100%;
-  max-width: 1200px;
+  background-color: ${({ theme }) => theme.color.thunder};
+  border-bottom: 2px solid ${({ theme }) => theme.color.midGray};
+`;
+const NavigationContainer = styled.section`
   display: flex;
+  padding: 10px 0;
   align-items: center;
   justify-content: space-between;
-  margin: 0 auto;
-  box-shadow: 0 0px 5px rgba(255, 255, 255, 0.6);
 `;
-const Logo = styled.h1`
-  margin: 0 12px;
+const Logo = styled(Link)`
+  margin: 0;
   font-family: "Sansita Swashed", cursive;
-  font-size: 28px;
+  font-size: 24px;
+  text-decoration: none;
   font-weight: bold;
-  color: #eee;
-  padding: 12px;
+  color: ${({ theme }) => theme.color.white};
 `;
 
-export { NavBar, Logo, StyledLink };
+export { NavBar, Logo, NavigationContainer };

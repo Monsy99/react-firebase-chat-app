@@ -1,18 +1,21 @@
 import React from "react";
-import { NavBar, Logo, StyledLink } from "./styled.js";
+import { NavBar, Logo, NavigationContainer } from "./styled.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import SignOut from "../SignOut";
 import SignIn from "../SignIn";
+import { Wrapper } from "../Wrapper/index.js";
 
 const Navigation = ({ firebase }) => {
   const auth = firebase.auth();
   const [user, loading] = useAuthState(auth);
   return (
     <NavBar>
-      <StyledLink to="/room/general">
-        <Logo>Chat App</Logo>
-      </StyledLink>
-      {user && !loading ? <SignOut auth={auth} /> : <SignIn auth={auth} />}
+      <Wrapper>
+        <NavigationContainer>
+          <Logo to="/room/general">Chat App</Logo>
+          {user && !loading ? <SignOut auth={auth} /> : <SignIn auth={auth} />}
+        </NavigationContainer>
+      </Wrapper>
     </NavBar>
   );
 };
