@@ -1,6 +1,18 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
+const Header = styled.header`
+  font-family: "Noto Sans JP", sans-serif;
+  margin-top: 30px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 20px;
+  &:first-letter {
+    text-transform: uppercase;
+  }
+`;
 const RelativeDiv = styled.div`
+  max-width: 100%;
   position: relative;
 `;
 const MessagesList = styled.ul`
@@ -15,7 +27,11 @@ const Message = styled.li`
   width: 100%;
   align-items: center;
   margin: 8px 0;
-  flex-direction: ${({ isAuthor }) => (isAuthor ? "row-reverse" : "unset")};
+  ${({ isAuthor }) =>
+    isAuthor &&
+    css`
+      flex-direction: row-reverse;
+    `}
 `;
 const AuthorAvatar = styled.img`
   width: 45px;
@@ -23,29 +39,38 @@ const AuthorAvatar = styled.img`
   align-self: flex-start;
 `;
 const MessageText = styled.p`
-  font-size: 18px;
-  background-color: #444;
+  font-size: 15px;
+  line-height: 140%;
+  background-color: #1c1c24;
   padding: 8px 12px;
   margin: 0 8px;
   border-radius: 10px;
+  border-top-left-radius: 0;
+  ${({ isAuthor }) =>
+    isAuthor &&
+    css`
+      background-color: #4447e2;
+      border-top-left-radius: 10px;
+      border-bottom-right-radius: 0;
+    `}
 `;
 const MessageTime = styled.div`
-  font-size: 14px;
+  font-size: 12px;
   text-align: center;
   flex-grow: 0;
   color: #ccc;
   margin: 0 8px;
 `;
 const MessageForm = styled.form`
-  width: calc(1200px - 300px);
-  max-width: 1200px;
+  width: calc(1220px - 300px);
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0;
   display: flex;
   position: fixed;
   bottom: 0;
   @media (max-width: 1200px) {
-    width: calc(100% - 300px);
+    width: calc(100% - 332px);
   }
 `;
 const FormInput = styled.input`
@@ -82,4 +107,5 @@ export {
   MessageText,
   MessageTime,
   MessageForm,
+  Header,
 };
