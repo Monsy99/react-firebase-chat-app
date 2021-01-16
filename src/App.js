@@ -1,10 +1,14 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 import "firebase/auth";
-import Default from "./components/Default";
-import { HashRouter, Redirect, Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import LoginPage from "./components/LoginPage";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser, setUser } from "./userSlice";
+import RoomPage from "./components/RoomPage";
+import { useEffect } from "react";
 
 firebase.initializeApp({
   apiKey: "AIzaSyDWBkQjdvZjHIpip9Z1bm9IpDmzc1XxQmM",
@@ -19,19 +23,32 @@ firebase.initializeApp({
 
 function App() {
   const auth = firebase ? firebase.auth() : null;
+  const [user] = useAuthState(auth);
+  const dispatch = useDispatch();
+  const storeUser = useSelector(selectUser);
+  useEffect(() => {
+    if (!storeUser && user) {
+      const uid = user.uid;
+      const photoURL = user.photoURL;
+      const displayName = user.displayName;
+      const userInfo = { uid, photoURL, displayName };
+      dispatch(setUser({ userInfo }));
+    }
+  });
+
   return (
-    <HashRouter>
+    <>
+      <Route path="/">
+        <Redirect to="/room/general" firebase={firebase}></Redirect>
+      </Route>
       <Route path={`/room/:roomRef`}>
         <Navigation firebase={firebase}></Navigation>
-        <Default firebase={firebase}></Default>
+        <RoomPage firebase={firebase}></RoomPage>
       </Route>
       <Route path="/login">
         <LoginPage firebase={firebase} auth={auth}></LoginPage>
       </Route>
-      <Route path="/" exact>
-        <Redirect to="/general" firebase={firebase}></Redirect>
-      </Route>
-    </HashRouter>
+    </>
   );
 }
 
