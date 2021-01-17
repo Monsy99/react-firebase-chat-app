@@ -4,14 +4,14 @@ import { selectUser } from "../../userSlice";
 import Navigation from "../Navigation";
 import LoginPrompt from "./LoginPropmt";
 
-const LoginPage = ({ auth, firebase }) => {
+const LoginPage = ({ auth }) => {
   const storeUser = useSelector(selectUser);
   if (storeUser) {
     return <Redirect to="/room/general"></Redirect>;
   }
   return (
     <>
-      <Navigation firebase={firebase}></Navigation>
+      <Navigation></Navigation>
       <LoginPrompt auth={auth}></LoginPrompt>
     </>
   );
