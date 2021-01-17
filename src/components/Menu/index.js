@@ -59,8 +59,10 @@ const Menu = ({ firestore, db }) => {
         {chatrooms
           ? chatrooms.map((chatroom) => {
               if (
-                chatroom.members.some((item) => item === currentUserId) ||
-                !chatroom.private
+                chatroom.members
+                  ? chatroom.members.some((item) => item === currentUserId) ||
+                    !chatroom.private
+                  : false
               ) {
                 return (
                   <Room to={`/room/${chatroom.ref}`} key={`${chatroom.ref}`}>
