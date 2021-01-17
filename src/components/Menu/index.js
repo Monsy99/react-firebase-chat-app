@@ -4,9 +4,11 @@ import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectUser } from "../../userSlice";
-import { Container, Room, Header, ChatroomsContainer } from "./styled";
+import generateChatroom from "./generateChatroom";
+import { Container, Header, ChatroomsContainer } from "./styled";
+import firebase from "firebase/app";
 
-const Menu = ({ firestore, db }) => {
+const Menu = ({ firestore }) => {
   const storeUser = useSelector(selectUser);
   const { roomRef } = useParams();
   const chatroomsRef = firestore.collection("chatrooms");
@@ -25,7 +27,7 @@ const Menu = ({ firestore, db }) => {
     try {
       if (titleInput.trim() !== "") {
         chatroomsRef.doc(ref).set({
-          createdAt: db.firestore.FieldValue.serverTimestamp(),
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
           title: titleInput,
           creator: currentUserId,
           ref: ref,
@@ -56,22 +58,9 @@ const Menu = ({ firestore, db }) => {
       <Header>Chatrooms:</Header>
       <ChatroomsContainer>
         {chatrooms
-          ? chatrooms.map((chatroom) => {
-              //checking if a chatroom should be displayed
-              // user needs to be a member or the chat should be public
-              if (
-                (chatroom.members &&
-                  chatroom.members.some((item) => item === currentUserId)) ||
-                !chatroom.private
-              ) {
-                return (
-                  <Room to={`/room/${chatroom.ref}`} key={`${chatroom.ref}`}>
-                    {chatroom.title}
-                  </Room>
-                );
-              }
-              return null;
-            })
+          ? chatrooms.map((chatroom) =>
+              generateChatroom(chatroom, currentUserId)
+            )
           : ""}
       </ChatroomsContainer>
     </Container>
