@@ -52,6 +52,7 @@ const ChatRoom = ({ firebase }) => {
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         uid,
         photoURL,
+        authorName: storeUser.displayName,
       });
       setInput("");
     }
