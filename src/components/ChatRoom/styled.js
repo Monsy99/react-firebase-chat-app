@@ -43,6 +43,12 @@ const AuthorAvatar = styled.img`
   width: 45px;
   border-radius: 50%;
   align-self: flex-start;
+  transform: translateY(-10px);
+  ${({ isAuthor }) =>
+    isAuthor &&
+    css`
+      transform: translateY(20px);
+    `};
 `;
 const MessageText = styled.p`
   position: relative;

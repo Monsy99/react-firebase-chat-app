@@ -13,7 +13,11 @@ const generateMessage = (message, currentUser) => {
   console.log(name);
   return (
     <Message isAuthor={isAuthor} key={`${message.id}${message.uid}`}>
-      <AuthorAvatar alt={"avatar"} src={message.photoURL}></AuthorAvatar>
+      <AuthorAvatar
+        isAuthor={isAuthor}
+        alt={"avatar"}
+        src={message.photoURL}
+      ></AuthorAvatar>
 
       <MessageText isAuthor={isAuthor}>
         <MessageAuthorName>{name}</MessageAuthorName>
