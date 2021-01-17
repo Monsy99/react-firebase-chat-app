@@ -1,6 +1,4 @@
 import firebase from "firebase/app";
-import "firebase/firestore";
-import "firebase/auth";
 import { Redirect, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import LoginPage from "./components/LoginPage";
@@ -46,7 +44,7 @@ function App() {
         <RoomPage firebase={firebase}></RoomPage>
       </Route>
       <Route path="/login">
-        <LoginPage firebase={firebase} auth={auth}></LoginPage>
+        <LoginPage auth={auth}></LoginPage>
       </Route>
     </>
   );
