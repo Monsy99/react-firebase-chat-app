@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
     }
     body {
     margin: 0;
-    color: white;
+    color: ${({ theme }) => theme.color.white};
     background-color: ${({ theme }) => theme.color.woodsmoke};
     font-family: 'Roboto', sans-serif;
     }
