@@ -12,7 +12,6 @@ const Menu = ({ firestore, db }) => {
   const chatroomsRef = firestore.collection("chatrooms");
   const [chatrooms] = useCollectionData(chatroomsRef);
   const [titleInput, setTitleInput] = useState("");
-  const [membersInput, setMembersInput] = useState("");
 
   const currentRoom = chatrooms
     ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
@@ -58,11 +57,12 @@ const Menu = ({ firestore, db }) => {
       <ChatroomsContainer>
         {chatrooms
           ? chatrooms.map((chatroom) => {
+              //checking if a chatroom should be displayed
+              // user needs to be a member or the chat should be public
               if (
-                chatroom.members
-                  ? chatroom.members.some((item) => item === currentUserId) ||
-                    !chatroom.private
-                  : false
+                (chatroom.members &&
+                  chatroom.members.some((item) => item === currentUserId)) ||
+                !chatroom.private
               ) {
                 return (
                   <Room to={`/room/${chatroom.ref}`} key={`${chatroom.ref}`}>
