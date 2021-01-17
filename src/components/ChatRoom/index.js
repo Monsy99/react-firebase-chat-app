@@ -26,9 +26,15 @@ const ChatRoom = ({ firebase }) => {
   const [chatrooms] = useCollectionData(chatroomsRef);
   const getMessagesByTime = messagesRef.orderBy("createdAt");
   const [messages] = useCollectionData(getMessagesByTime);
+
   const currentRoom = chatrooms
     ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
     : null;
+  const initialMessage = {
+    text: `Hello ! This is a beginning of the #${
+      currentRoom && currentRoom.title
+    } channel`,
+  };
   const [input, setInput] = useState("");
   const onInputChange = (e) => {
     setInput(e.target.value);
@@ -55,12 +61,11 @@ const ChatRoom = ({ firebase }) => {
     }
   };
   const dummy = useRef();
-
   return storeUser ? (
     <RelativeDiv>
       <Header># {currentRoom ? currentRoom.title : ""}</Header>
       <MessagesList>
-        {messages &&
+        {messages && !!messages.length ? (
           messages.map((message) => (
             <Message
               isAuthor={message.uid === storeUser.uid}
@@ -85,7 +90,12 @@ const ChatRoom = ({ firebase }) => {
                   : ``}
               </MessageTime>
             </Message>
-          ))}
+          ))
+        ) : (
+          <Message isAuthor={false}>
+            <MessageText>{initialMessage.text}</MessageText>
+          </Message>
+        )}
         <div ref={dummy}></div>
       </MessagesList>
       <MessageForm onSubmit={onFormSubmit}>
