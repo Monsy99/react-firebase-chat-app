@@ -26,12 +26,18 @@ const Message = styled.li`
   display: flex;
   width: 100%;
   align-items: center;
-  margin: 8px 0;
+  margin-top: 16px;
   ${({ isAuthor }) =>
     isAuthor &&
     css`
       flex-direction: row-reverse;
     `}
+`;
+const MessageAuthorName = styled.p`
+  font-size: 13px;
+  position: absolute;
+  transform: translateY(-39px) translateX(-5px);
+  color: ${({ theme }) => theme.color.midGray};
 `;
 const AuthorAvatar = styled.img`
   width: 45px;
@@ -39,6 +45,7 @@ const AuthorAvatar = styled.img`
   align-self: flex-start;
 `;
 const MessageText = styled.p`
+  position: relative;
   font-size: 15px;
   line-height: 140%;
   background-color: #1c1c24;
@@ -104,6 +111,7 @@ export {
   MessagesList,
   AuthorAvatar,
   Message,
+  MessageAuthorName,
   MessageText,
   MessageTime,
   MessageForm,
