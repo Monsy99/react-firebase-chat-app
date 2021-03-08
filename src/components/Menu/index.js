@@ -1,23 +1,23 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { selectUser } from "../../userSlice";
 import generateChatroom from "./generateChatroom";
 import { Container, Header, ChatroomsContainer } from "./styled";
-import firebase from "firebase/app";
+import useChatroomMessagesInfo from "../../utils/useChatroomMessagesInfo";
 
-const Menu = ({ firestore }) => {
+const Menu = ({ firebase }) => {
   const storeUser = useSelector(selectUser);
   const { roomRef } = useParams();
-  const chatroomsRef = firestore.collection("chatrooms");
-  const [chatrooms] = useCollectionData(chatroomsRef);
+  const { chatrooms, chatroomsRef, currentRoom } = useChatroomMessagesInfo({
+    firebase: firebase,
+    roomRef: roomRef,
+  });
   const [titleInput, setTitleInput] = useState("");
-
-  const currentRoom = chatrooms
-    ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
-    : null;
+  const onTitleInputChange = (e) => {
+    setTitleInput(e.target.value);
+  };
   const currentUserId = storeUser ? storeUser.uid : null;
 
   const onFormSubmit = (e) => {
@@ -39,9 +39,6 @@ const Menu = ({ firestore }) => {
     } catch (e) {
       console.log(e);
     }
-  };
-  const onTitleInputChange = (e) => {
-    setTitleInput(e.target.value);
   };
 
   return (
