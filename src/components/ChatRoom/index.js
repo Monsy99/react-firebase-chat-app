@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import React, { useRef, useState } from "react";
 import {
   FormSubmit,
   FormInput,
@@ -15,34 +14,24 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../userSlice";
 import generateInitialMessage from "./generateInitialMessage";
 import generateMessage from "./generateMessage";
+import useChatroomMessagesInfo from "./useChatroomMessagesInfo";
 
 const ChatRoom = ({ firebase }) => {
   const storeUser = useSelector(selectUser);
-  const firestore = firebase.firestore();
   const { roomRef } = useParams();
-  const chatroomsRef = firestore.collection("chatrooms");
-  const messagesRef = chatroomsRef.doc(roomRef).collection("messages");
-  const [chatrooms] = useCollectionData(chatroomsRef);
-  const getMessagesByTime = messagesRef.orderBy("createdAt");
-  const [messages] = useCollectionData(getMessagesByTime);
-  const currentRoom = chatrooms
-    ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
-    : null;
-  const initialMessage = generateInitialMessage(currentRoom);
   const dummy = useRef();
+  const { messages, currentRoom, messagesRef } = useChatroomMessagesInfo({
+    firebase: firebase,
+    roomRef: roomRef,
+    dummy: dummy,
+  });
   const [input, setInput] = useState("");
 
   const onInputChange = (e) => {
     setInput(e.target.value);
   };
 
-  useEffect(() => {
-    if (!!dummy.current) {
-      dummy.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages]);
-
-  const onFormSubmit = async (e) => {
+  const onNewMessageSubmit = async (e) => {
     //on the form submit the new message is being pushed to the room you are currently in
     e.preventDefault();
     const { uid, photoURL } = storeUser;
@@ -56,7 +45,7 @@ const ChatRoom = ({ firebase }) => {
       });
       setInput("");
     }
-    if (!!dummy.current) {
+    if (dummy.current) {
       dummy.current.scrollIntoView({ behavior: "smooth" });
     }
   };
@@ -64,18 +53,18 @@ const ChatRoom = ({ firebase }) => {
   return (
     storeUser && (
       <RelativeDiv>
-        <Header># {currentRoom ? currentRoom.title : ""}</Header>
+        <Header># {currentRoom && currentRoom.title}</Header>
         <MessagesList>
-          {messages && !!messages.length ? (
+          {messages?.length ? (
             messages.map((message) => generateMessage(message, storeUser))
           ) : (
             <Message isAuthor={false}>
-              <MessageText>{initialMessage.text}</MessageText>
+              <MessageText>{generateInitialMessage(currentRoom)}</MessageText>
             </Message>
           )}
           <div ref={dummy}></div>
         </MessagesList>
-        <MessageForm onSubmit={onFormSubmit}>
+        <MessageForm onSubmit={onNewMessageSubmit}>
           <FormInput
             placeholder={"Write a message here"}
             value={input}
