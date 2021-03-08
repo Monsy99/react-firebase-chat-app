@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { useCollectionData } from "react-firebase-hooks/firestore";
 
-const useChatroomMessagesInfo = ({ firebase, roomRef, dummy }) => {
+const useChatroomMessagesInfo = ({ firebase, roomRef = null }) => {
   const firestore = firebase.firestore();
   const chatroomsRef = firestore.collection("chatrooms");
   const messagesRef = chatroomsRef.doc(roomRef).collection("messages");
@@ -12,11 +11,6 @@ const useChatroomMessagesInfo = ({ firebase, roomRef, dummy }) => {
     ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
     : null;
 
-  useEffect(() => {
-    if (!!dummy.current) {
-      dummy.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages, dummy]);
   return { chatrooms, messages, currentRoom, messagesRef };
 };
 export default useChatroomMessagesInfo;
