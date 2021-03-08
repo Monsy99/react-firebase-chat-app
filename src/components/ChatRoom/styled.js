@@ -92,23 +92,28 @@ const FormInput = styled.input`
   flex-grow: 1;
   font-size: 16px;
   color: #ddd;
-  background-color: #222;
+  background-color: #1c1c24;
   border-radius: 0;
+  border-top-left-radius: 8px;
   border: none;
   &::placeholder {
   }
   &:focus {
     border: none;
     outline: none;
-    background-color: #333;
+    filter: brightness(1.2);
   }
 `;
 const FormSubmit = styled.button`
   padding: 12px 20px;
   font-size: 26px;
-  background-color: #333;
+  background-color: #1c1c24;
   border: none;
+  border-top-right-radius: 8px;
   color: white;
+  &:hover {
+    filter: brightness(1.2);
+  }
 `;
 export {
   RelativeDiv,
