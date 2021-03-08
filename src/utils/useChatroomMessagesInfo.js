@@ -11,6 +11,6 @@ const useChatroomMessagesInfo = ({ firebase, roomRef = null }) => {
     ? chatrooms.find((chatroom) => roomRef === chatroom.ref)
     : null;
 
-  return { chatrooms, messages, currentRoom, messagesRef };
+  return { chatrooms, messages, currentRoom, messagesRef, chatroomsRef };
 };
 export default useChatroomMessagesInfo;
