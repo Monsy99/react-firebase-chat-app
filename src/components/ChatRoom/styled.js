@@ -36,6 +36,7 @@ const Message = styled.li`
 const MessageAuthorName = styled.p`
   font-size: 13px;
   position: absolute;
+  min-width: 60px;
   transform: translateY(-39px) translateX(-5px);
   color: ${({ theme }) => theme.color.midGray};
 `;
