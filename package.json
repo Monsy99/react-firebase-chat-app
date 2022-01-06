@@ -4,20 +4,28 @@
   "private": true,
   "homepage": "http://Monsy99.github.io/react-firebase-chat-app",
   "dependencies": {
-    "@reduxjs/toolkit": "^1.5.0",
-    "@testing-library/jest-dom": "^5.11.6",
-    "@testing-library/react": "^11.2.0",
-    "@testing-library/user-event": "^12.2.2",
-    "firebase": "^8.0.2",
-    "gh-pages": "^3.1.0",
-    "nanoid": "^3.1.18",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "@reduxjs/toolkit": "^1.7.1",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.8",
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "firebase": "^8.10.0",
+    "gh-pages": "^3.2.3",
+    "nanoid": "^3.1.30",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-firebase-hooks": "^2.2.0",
-    "react-redux": "^7.2.2",
-    "react-router-dom": "^5.2.0",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.0",
-    "styled-components": "^5.2.1",
+    "styled-components": "^5.3.3",
+    "ts-jest": "^27.1.2",
+    "typescript": "^4.5.4",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -45,5 +53,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-redux": "^7.1.21",
+    "@types/react-router-dom": "^5.3.2"
   }
 }

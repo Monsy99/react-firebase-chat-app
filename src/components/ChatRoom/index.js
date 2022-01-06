@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../userSlice";
 import generateInitialMessage from "./generateInitialMessage";
 import generateMessage from "./generateMessage";
-import useChatroomMessagesInfo from "./useChatroomMessagesInfo";
+import useChatroomMessagesInfo from "../../utils/useChatroomMessagesInfo";
 
 const ChatRoom = ({ firebase }) => {
   const storeUser = useSelector(selectUser);

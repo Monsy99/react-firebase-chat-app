@@ -1,29 +1,21 @@
-import firebase from "firebase/app";
 import { Redirect, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import LoginPage from "./components/LoginPage";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, setUser } from "./userSlice";
 import RoomPage from "./components/RoomPage";
+import firebase from "firebase/app";
 import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
-firebase.initializeApp({
-  apiKey: "AIzaSyDWBkQjdvZjHIpip9Z1bm9IpDmzc1XxQmM",
-  authDomain: "react-firebase-chat-app-505e9.firebaseapp.com",
-  databaseURL: "https://react-firebase-chat-app-505e9.firebaseio.com",
-  projectId: "react-firebase-chat-app-505e9",
-  storageBucket: "react-firebase-chat-app-505e9.appspot.com",
-  messagingSenderId: "56873190707",
-  appId: "1:56873190707:web:ae292904dd7bcdb7542a46",
-  measurementId: "G-NKK3HT6H63",
-});
 
 function App() {
   const auth = firebase ? firebase.auth() : null;
   const [user] = useAuthState(auth);
   const dispatch = useDispatch();
   const storeUser = useSelector(selectUser);
+  console.log(firebase.auth())
+
   useEffect(() => {
     if (!storeUser && user) {
       const uid = user.uid;
@@ -37,10 +29,10 @@ function App() {
   return (
     <>
       <Route path="/">
-        <Redirect to="/room/general" firebase={firebase}></Redirect>
+        <Redirect to="/room/general" />
       </Route>
       <Route path={`/room/:roomRef`}>
-        <Navigation firebase={firebase}></Navigation>
+        <Navigation/>
         <RoomPage firebase={firebase}></RoomPage>
       </Route>
       <Route path="/login">

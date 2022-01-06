@@ -1,6 +1,7 @@
 import { useCollectionData } from "react-firebase-hooks/firestore";
+import firebase from "firebase";
 
-const useChatroomMessagesInfo = ({ firebase, roomRef = null }) => {
+const useChatroomMessagesInfo = ({  roomRef = null }) => {
   const firestore = firebase.firestore();
   const chatroomsRef = firestore.collection("chatrooms");
   const messagesRef = chatroomsRef.doc(roomRef).collection("messages");
